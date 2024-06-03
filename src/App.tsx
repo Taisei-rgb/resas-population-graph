@@ -1,8 +1,8 @@
-import { useState, FC } from 'react';
+import { useState, useEffect, FC } from 'react';
 import Header from './components/Header';
 import PrefectureCheckboxList from './components/PrefectureCheckboxList';
 import Graph from './components/Graph';
-import { fetchPopulation } from './api';
+import { fetchPopulation, fetchPrefectures } from './api';
 import { DataPoint } from './types';
 
 const App: FC = () => {
@@ -10,6 +10,27 @@ const App: FC = () => {
     [key: string]: DataPoint[];
   }>({});
   const [selectedType, setSelectedType] = useState<string>('総人口');
+  const [prefectureCodes, setPrefectureCodes] = useState<{
+    [key: string]: number;
+  }>({});
+
+  useEffect(() => {
+    const fetchCodes = async () => {
+      const prefectures = await fetchPrefectures();
+      const codes = prefectures.reduce(
+        (
+          acc: { [key: string]: number },
+          pref: { prefName: string; prefCode: number }
+        ) => {
+          acc[pref.prefName] = pref.prefCode;
+          return acc;
+        },
+        {}
+      );
+      setPrefectureCodes(codes);
+    };
+    fetchCodes();
+  }, []);
 
   const handlePrefectureChange = async (
     prefName: string,
@@ -39,9 +60,7 @@ const App: FC = () => {
 
     const updatedPrefectures: { [key: string]: DataPoint[] } = {};
     for (const prefName in selectedPrefectures) {
-      const prefCode = Object.keys(selectedPrefectures).find(
-        (key) => key === prefName
-      );
+      const prefCode = prefectureCodes[prefName];
       if (prefCode) {
         const data = await fetchPopulation(prefCode.toString(), newType);
         updatedPrefectures[prefName] = data;
