@@ -13,7 +13,7 @@ esbuild
       copy({
         assets: {
           from: './public/*',
-          to: './dist',
+          to: './',
         },
       }),
     ],

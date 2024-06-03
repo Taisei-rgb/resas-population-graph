@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "node build.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,7 @@
     "@types/jest": "^29.5.12",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
     "css-loader": "^7.1.2",
     "esbuild": "^0.21.4",
     "esbuild-loader": "^4.1.0",
@@ -35,6 +38,7 @@
     "sass": "^1.77.4",
     "sass-loader": "^14.2.1",
     "style-loader": "^4.0.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vite": "^5.2.12"
   }
 }
