@@ -1,4 +1,4 @@
-const API_KEY = 'YOUR_API_KEY';
+const API_KEY = import.meta.env.VITE_RESAS_API_KEY;
 const BASE_URL = 'https://opendata.resas-portal.go.jp';
 
 export const fetchPrefectures = async () => {
@@ -9,10 +9,38 @@ export const fetchPrefectures = async () => {
   return data.result;
 };
 
-export const fetchPopulation = async (prefCode: string) => {
-  const response = await fetch(`${BASE_URL}/api/v1/population/composition/perYear?prefCode=${prefCode}`, {
-    headers: { 'X-API-KEY': API_KEY },
-  });
+export const fetchPopulation = async (prefCode: string, type: string) => {
+  const typeMap: { [key: string]: string } = {
+    総人口: '総人口',
+    年少人口: '年少人口',
+    生産年齢人口: '生産年齢人口',
+    老年人口: '老年人口',
+  };
+
+  const encodedPrefCode = encodeURIComponent(prefCode);
+
+  const response = await fetch(
+    `${BASE_URL}/api/v1/population/composition/perYear?prefCode=${encodedPrefCode}`,
+    {
+      headers: { 'X-API-KEY': API_KEY },
+    }
+  );
   const data = await response.json();
-  return data.result.data[0].data;
+
+  if (!data.result || !data.result.data) {
+    throw new Error('Invalid response structure');
+  }
+
+  const populationData = data.result.data.find(
+    (d: any) => d.label === typeMap[type]
+  );
+
+  if (!populationData || !populationData.data) {
+    throw new Error('No population data found');
+  }
+
+  return populationData.data.map((d: any) => ({
+    year: d.year,
+    value: d.value,
+  }));
 };
