@@ -42,19 +42,29 @@ const PrefectureCheckboxList: FC<Props> = ({ onPrefectureChange }) => {
   }
 
   return (
-    <div>
-      {prefectures.map((pref) => (
-        <label key={pref.prefCode}>
-          <input
-            type="checkbox"
-            value={pref.prefCode}
-            onChange={(e) =>
-              onPrefectureChange(pref.prefName, pref.prefCode, e.target.checked)
-            }
-          />
-          {pref.prefName}
-        </label>
-      ))}
+    <div className="pref-container">
+      <h2 className="pref-title">都道府県一覧</h2>
+      <div className="pref-wrapper">
+        {prefectures.map((pref) => (
+          <div key={pref.prefCode} className="pref-item">
+            <label className="pref-label">
+              <input
+                type="checkbox"
+                value={pref.prefCode}
+                onChange={(e) =>
+                  onPrefectureChange(
+                    pref.prefName,
+                    pref.prefCode,
+                    e.target.checked
+                  )
+                }
+                className="pref-checkbox"
+              />
+              {pref.prefName}
+            </label>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

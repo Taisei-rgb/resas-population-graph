@@ -70,17 +70,33 @@ const App: FC = () => {
   };
 
   return (
-    <div>
+    <div className="app-background">
       <Header />
-      <select onChange={handleTypeChange} value={selectedType}>
-        <option value="総人口">総人口</option>
-        <option value="年少人口">年少人口</option>
-        <option value="生産年齢人口">生産年齢人口</option>
-        <option value="老年人口">老年人口</option>
-      </select>
-      <PrefectureCheckboxList onPrefectureChange={handlePrefectureChange} />
-      <div className="graph-container">
-        <Graph data={selectedPrefectures} selectedType={selectedType} />
+      <div className="item-list">
+        <form className="population-form">
+          <select
+            onChange={handleTypeChange}
+            value={selectedType}
+            className="population-select"
+          >
+            <option className="population-option" value="総人口">
+              総人口
+            </option>
+            <option className="population-option" value="年少人口">
+              年少人口
+            </option>
+            <option className="population-option" value="生産年齢人口">
+              生産年齢人口
+            </option>
+            <option className="population-option" value="老年人口">
+              老年人口
+            </option>
+          </select>
+        </form>
+        <PrefectureCheckboxList onPrefectureChange={handlePrefectureChange} />
+        <div className="graph-container">
+          <Graph data={selectedPrefectures} selectedType={selectedType} />
+        </div>
       </div>
     </div>
   );

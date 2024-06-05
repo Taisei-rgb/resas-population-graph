@@ -1,15 +1,60 @@
-body {
-  font-family: Arial, sans-serif;
+// Base style
+$focus-blue: #007bff;
+$checked-blue: #2563eb;
+$white: #fff;
+$dark-charcoal: #333;
+$midnight: #1f2937;
+$light-gray: #f8f8f8;
+$border-gray: #d1d5db;
+$background-gray: #f9fafb;
+
+// Mixin for flex center
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Mixin for input styles
+@mixin input-styles($width, $height, $bg-color, $border-color) {
+  width: $width;
+  height: $height;
+  background-color: $bg-color;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+// Reset margin and padding
+*,
+*:before,
+*:after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+// Default style
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 header {
-  background-color: #f8f8f8;
+  background-color: $white;
   padding: 10px 20px;
-  text-align: center;
+  text-align: left;
   border-bottom: 1px solid #e7e7e7;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 99;
 }
 
 h1 {
@@ -17,18 +62,159 @@ h1 {
   font-size: 24px;
 }
 
-div {
-  padding: 20px;
-}
-
 label {
   display: block;
-  margin: 10px 0;
 }
 
-// Graph Style
+select {
+  margin-bottom: 10px;
+}
 
+// App style
+.app-background {
+  background-color: $light-gray;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Item style
+.item-list {
+  padding: 20px;
+  flex: 1;
+}
+
+// Population style
+.population-form {
+  max-width: 600px;
+  width: 200px;
+  margin-left: auto;
+
+  .population-select {
+    width: 100%;
+    padding: 8px 4px;
+    font-size: 14px;
+    color: $midnight;
+    background-color: $background-gray;
+    border: 1px solid $border-gray;
+    border-radius: 8px;
+    margin-right: 8px;
+
+    &:focus {
+      border-color: $focus-blue;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($focus-blue, 0.3);
+    }
+  }
+}
+
+// Option style
+.population-option {
+  font-size: 14px;
+  color: $dark-charcoal;
+}
+
+// Prefecture style
+.pref-container {
+  background-color: $white;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  padding: 8px 12px;
+  max-width: 100%;
+}
+
+.pref-title {
+  display: block;
+  font-size: 19px;
+  text-align: center;
+  color: $dark-charcoal;
+  margin-bottom: 30px;
+}
+
+.pref-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 30px;
+}
+
+.pref-item {
+  @include flex-center;
+  width: calc(14.285% - 10px); /* 7 columns layout */
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  justify-content: flex-start;
+}
+
+.pref-checkbox {
+  @include input-styles(16px, 16px, #f3f4f6, $border-gray);
+  margin-right: 8px;
+  flex-shrink: 0;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  &:checked {
+    background-color: $checked-blue;
+    border-color: $checked-blue;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 4px;
+      border: 2px solid $white;
+      border-width: 0 0 2px 2px;
+      transform: rotate(-45deg);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+
+  &:focus {
+    border-color: $focus-blue;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($focus-blue, 0.3);
+  }
+}
+
+.pref-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: $midnight;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+// Graph style
 .graph-container {
   width: 100%;
   height: 400px;
+}
+
+// Responsive support
+@media (max-width: 1000px) {
+  .pref-item {
+    width: calc(20% - 10px); /* 5 columns layout */
+  }
+}
+
+@media (max-width: 800px) {
+  .pref-item {
+    width: calc(25% - 10px); /* 4 columns layout */
+  }
+}
+
+@media (max-width: 600px) {
+  .pref-item {
+    width: calc(33.333% - 10px); /* 3 columns layout */
+  }
+}
+
+@media (max-width: 400px) {
+  .pref-item {
+    width: calc(50% - 10px); /* 2 columns layout */
+  }
 }
