@@ -1,7 +1,9 @@
+import { Prefecture, DataPoint } from './types';
+
 const API_KEY = import.meta.env.VITE_RESAS_API_KEY;
 const BASE_URL = 'https://opendata.resas-portal.go.jp';
 
-export const fetchPrefectures = async () => {
+export const fetchPrefectures = async (): Promise<Prefecture[]> => {
   const response = await fetch(`${BASE_URL}/api/v1/prefectures`, {
     headers: { 'X-API-KEY': API_KEY },
   });
@@ -9,7 +11,10 @@ export const fetchPrefectures = async () => {
   return data.result;
 };
 
-export const fetchPopulation = async (prefCode: string, type: string) => {
+export const fetchPopulation = async (
+  prefCode: string,
+  type: string
+): Promise<DataPoint[]> => {
   const typeMap: { [key: string]: string } = {
     総人口: '総人口',
     年少人口: '年少人口',

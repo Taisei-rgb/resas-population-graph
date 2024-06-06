@@ -1,20 +1,10 @@
 import { useState, useEffect, FC } from 'react';
 import { fetchPrefectures } from '../api';
+import { Prefecture, PrefectureCheckboxListProps } from '../types';
 
-interface Prefecture {
-  prefCode: number;
-  prefName: string;
-}
-
-interface Props {
-  onPrefectureChange: (
-    prefName: string,
-    prefCode: number,
-    isChecked: boolean
-  ) => void;
-}
-
-const PrefectureCheckboxList: FC<Props> = ({ onPrefectureChange }) => {
+export const PrefectureCheckboxList: FC<PrefectureCheckboxListProps> = ({
+  onPrefectureChange,
+}) => {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -68,5 +58,3 @@ const PrefectureCheckboxList: FC<Props> = ({ onPrefectureChange }) => {
     </div>
   );
 };
-
-export default PrefectureCheckboxList;

@@ -1,11 +1,11 @@
 import { useState, useEffect, FC } from 'react';
-import Header from './components/Header';
-import PrefectureCheckboxList from './components/PrefectureCheckboxList';
-import Graph from './components/Graph';
+import { Header } from './components/Header';
+import { PrefectureCheckboxList } from './components/PrefectureCheckboxList';
+import { Graph } from './components/Graph';
 import { fetchPopulation, fetchPrefectures } from './api';
 import { DataPoint } from './types';
 
-const App: FC = () => {
+export const App: FC = () => {
   const [selectedPrefectures, setSelectedPrefectures] = useState<{
     [key: string]: DataPoint[];
   }>({});
@@ -101,5 +101,3 @@ const App: FC = () => {
     </div>
   );
 };
-
-export default App;

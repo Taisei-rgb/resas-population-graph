@@ -1,9 +1,7 @@
-const Header = (): JSX.Element => {
-  return (
-    <header>
-      <h1>都道府県別人口グラフ</h1>
-    </header>
-  );
-};
+import { FC } from 'react';
 
-export default Header;
+export const Header: FC = () => (
+  <header>
+    <h1>都道府県別人口グラフ</h1>
+  </header>
+);
