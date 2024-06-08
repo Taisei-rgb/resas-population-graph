@@ -1,6 +1,6 @@
 import { Prefecture, DataPoint } from './types';
+import { API_KEY } from './env';
 
-const API_KEY = import.meta.env.VITE_RESAS_API_KEY;
 const BASE_URL = 'https://opendata.resas-portal.go.jp';
 
 export const fetchPrefectures = async (): Promise<Prefecture[]> => {
