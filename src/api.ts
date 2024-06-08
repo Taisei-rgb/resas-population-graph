@@ -7,6 +7,9 @@ export const fetchPrefectures = async (): Promise<Prefecture[]> => {
   const response = await fetch(`${BASE_URL}/api/v1/prefectures`, {
     headers: { 'X-API-KEY': API_KEY },
   });
+  if (!response.ok) {
+    throw new Error('Failed to fetch prefectures');
+  }
   const data = await response.json();
   return data.result;
 };
@@ -30,6 +33,9 @@ export const fetchPopulation = async (
       headers: { 'X-API-KEY': API_KEY },
     }
   );
+  if (!response.ok) {
+    throw new Error('Failed to fetch population data');
+  }
   const data = await response.json();
 
   if (!data.result || !data.result.data) {
