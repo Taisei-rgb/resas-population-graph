@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect, FC } from 'react';
 import { fetchPrefectures } from '../api';
 import { Prefecture, PrefectureCheckboxListProps } from '../types';

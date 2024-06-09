@@ -1,3 +1,4 @@
+import React from 'react';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts, { Options } from 'highcharts';
 import accessibility from 'highcharts/modules/accessibility';

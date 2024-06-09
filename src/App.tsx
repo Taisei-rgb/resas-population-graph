@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect, FC } from 'react';
 import { Header } from './components/Header';
 import { PrefectureCheckboxList } from './components/PrefectureCheckboxList';
