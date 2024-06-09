@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useEffect, FC } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { Header } from './components/Header';
 import { PrefectureCheckboxList } from './components/PrefectureCheckboxList';
 import { Graph } from './components/Graph';
@@ -14,6 +13,9 @@ export const App: FC = () => {
   const [prefectureCodes, setPrefectureCodes] = useState<{
     [key: string]: number;
   }>({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [flashMessage, setFlashMessage] = useState<string | null>(null);
+  const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
     const fetchCodes = async () => {
@@ -56,6 +58,7 @@ export const App: FC = () => {
   const handleTypeChange = async (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
+    setIsLoading(true);
     const newType = event.target.value;
     setSelectedType(newType);
 
@@ -68,6 +71,15 @@ export const App: FC = () => {
       }
     }
     setSelectedPrefectures(updatedPrefectures);
+    setIsLoading(false);
+    showFlashMessage('人口タイプが変更されました！');
+  };
+
+  const showFlashMessage = (message: string) => {
+    setFadeOut(false);
+    setFlashMessage(message);
+    setTimeout(() => setFadeOut(true), 2500);
+    setTimeout(() => setFlashMessage(null), 3000);
   };
 
   return (
@@ -94,11 +106,22 @@ export const App: FC = () => {
             </option>
           </select>
         </form>
-        <PrefectureCheckboxList onPrefectureChange={handlePrefectureChange} />
+        <PrefectureCheckboxList
+          onPrefectureChange={handlePrefectureChange}
+          selectedPrefectures={selectedPrefectures}
+          prefectureCodes={prefectureCodes}
+          selectedType={selectedType}
+          setSelectedPrefectures={setSelectedPrefectures}
+          setIsLoading={setIsLoading}
+          setFlashMessage={setFlashMessage}
+          setFadeOut={setFadeOut}
+        />
         <div className="graph-container">
           <Graph data={selectedPrefectures} selectedType={selectedType} />
         </div>
       </div>
+      {isLoading && <div className="info-alert">反映中...</div>}
+      {flashMessage && <div className={`success-alert ${fadeOut ? 'fade-out' : ''}`}>{flashMessage}</div>}
     </div>
   );
 };
