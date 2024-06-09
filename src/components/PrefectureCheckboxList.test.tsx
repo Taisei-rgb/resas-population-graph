@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 import { PrefectureCheckboxList } from './PrefectureCheckboxList';
 import '@testing-library/jest-dom';
