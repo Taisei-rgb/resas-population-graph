@@ -1,7 +1,7 @@
 // Base style
 $focus-blue: #007bff;
 $checked-blue: #2563eb;
-$white: #fff;
+$white: #ffffff;
 $dark-charcoal: #333;
 $midnight: #1f2937;
 $light-gray: #f8f8f8;
@@ -27,6 +27,48 @@ $background-gray: #f9fafb;
   align-items: center;
   justify-content: center;
   position: relative;
+}
+
+// Mixin for alert styles
+@mixin alert-style($text-color, $background-color) {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 16px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  border-radius: 8px;
+  color: $text-color;
+  background-color: $background-color;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+
+  &.fade-out {
+    opacity: 0;
+  }
+}
+
+// Mixin for button styles
+@mixin button-style($text-color, $background-color, $border-color: none) {
+  cursor: pointer;
+  color: $text-color;
+  background-color: $background-color;
+  font-weight: 500;
+  border-radius: 8px;
+  font-size: 12px;
+  border: $border-color;
+  padding: 8px 20px;
+  margin-right: 8px;
+
+  &:hover {
+    background-color: darken($background-color, 10%);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(#93c5fd, 0.3);
+  }
 }
 
 // Reset margin and padding
@@ -123,15 +165,34 @@ select {
   max-width: 100%;
 }
 
-.pref-title {
-  display: block;
-  font-size: 19px;
-  text-align: center;
-  color: $dark-charcoal;
+.pref-title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
   margin-bottom: 30px;
+
+  .pref-title {
+    font-size: 19px;
+    color: $dark-charcoal;
+    flex: 1;
+    text-align: center;
+  }
+
+  .button-group {
+    position: absolute;
+    right: 0;
+    display: flex;
+    padding-top: 8px;
+
+    @media (max-width: 600px) {
+      position: relative;
+    }
+  }
 }
 
-.pref-wrapper {
+.pref-item-wrapper {
   display: flex;
   flex-wrap: wrap;
   margin-left: 30px;
@@ -192,6 +253,24 @@ select {
 .graph-container {
   width: 100%;
   height: 400px;
+}
+
+// Flash message styles
+.success-alert {
+  @include alert-style(#065f46, #ecfdf5);
+}
+
+.info-alert {
+  @include alert-style(#1e40af, #eff6ff);
+}
+
+// Button styles
+.select-all-button {
+  @include button-style($white, #1d4ed8);
+}
+
+.reset-button {
+  @include button-style($midnight, $white, 1px solid #e5e7eb);
 }
 
 // Responsive support

@@ -19,4 +19,11 @@ export interface PrefectureCheckboxListProps {
     prefCode: number,
     isChecked: boolean
   ) => void;
+  selectedPrefectures: { [key: string]: DataPoint[] };
+  prefectureCodes: { [key: string]: number };
+  selectedType: string;
+  setSelectedPrefectures: React.Dispatch<React.SetStateAction<{ [key: string]: DataPoint[] }>>;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setFlashMessage: React.Dispatch<React.SetStateAction<string | null>>;
+  setFadeOut: React.Dispatch<React.SetStateAction<boolean>>;
 }
