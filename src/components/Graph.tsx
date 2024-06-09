@@ -1,24 +1,52 @@
-import React from 'react';
 import HighchartsReact from 'highcharts-react-official';
-import Highcharts from 'highcharts';
+import Highcharts, { Options } from 'highcharts';
+import accessibility from 'highcharts/modules/accessibility';
+import { FC, useMemo } from 'react';
+import { DataPoint, GraphProps } from '../types';
 
-const Graph: React.FC<{ data: any[] }> = ({ data }) => {
-  const options = {
+accessibility(Highcharts);
+
+const generateOptions = (
+  data: { [key: string]: DataPoint[] },
+  selectedType: string
+): Options => ({
+  title: {
+    text: '人口構成',
+    margin: 30,
+  },
+  chart: {
+    type: 'line',
+    height: 400,
+    borderRadius: 8,
+    width: null,
+  },
+  xAxis: {
+    categories: data[Object.keys(data)[0]]?.map((item) => item.year.toString()),
+  },
+  yAxis: {
     title: {
-      text: '人口構成',
+      text: '総人口 (k)',
     },
-    xAxis: {
-      categories: data.map((item) => item.year),
-    },
-    series: [
-      {
-        name: '総人口',
-        data: data.map((item) => item.value),
-      },
-    ],
-  };
+  },
+  series: Object.keys(data).map((prefName) => ({
+    type: 'line',
+    name: prefName,
+    data: data[prefName]?.map((item) => item.value),
+  })),
+  accessibility: {
+    enabled: false,
+  },
+});
 
-  return <HighchartsReact highcharts={Highcharts} options={options} />;
+export const Graph: FC<GraphProps> = ({ data, selectedType }) => {
+  const options = useMemo(
+    () => generateOptions(data, selectedType),
+    [data, selectedType]
+  );
+
+  return (
+    <section>
+      <HighchartsReact highcharts={Highcharts} options={options} />
+    </section>
+  );
 };
-
-export default Graph;
