@@ -1,3 +1,14 @@
+## 使用技術
+- フロントエンド：React, TypeScript
+- API：RESAS
+- グラフ：Highcharts
+- リンター、フォーマッター：ESLint, Prettier
+- CSS：sass
+- テスト：Jest
+- ホスティングサービス：Vercel
+- 管理：Git
+- ビルドツール：esbuild, Vite
+
 ## 事前準備
 - [ ] ルートディレクトリに `.env` ファイルを作成する。
 ```
