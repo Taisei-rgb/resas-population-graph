@@ -26,7 +26,7 @@ const generateOptions = (
   },
   yAxis: {
     title: {
-      text: '総人口 (k)',
+      text: '総人口',
     },
   },
   series: Object.keys(data).map((prefName) => ({
